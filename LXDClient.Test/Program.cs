@@ -19,7 +19,10 @@ public class Program
         //await client.CertificatePublicPostAsync("TOKEN");
 
         // Get Auth Identies OIDC (Test Client Cert Auth)
-        await client.AuthIdentitiesOidcGetAsync();
+        //await client.AuthIdentitiesOidcGetAsync();
+
+        //await client.InstancesGetAsync();
+        //await client.InstancesGetAsync("v1");
     }
 }
 

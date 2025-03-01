@@ -4,6 +4,7 @@ using System.Diagnostics.SymbolStore;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using LXDClient.Models;
 
 namespace LXDClient;
 
@@ -63,18 +64,47 @@ public class Client
 
     public async Task AuthIdentitiesOidcGetAsync()
     {
-        var response = await this.httpClient.GetAsync("/1.0/auth/identities/oidc");
-        Console.WriteLine(response.StatusCode);
-        if (response.IsSuccessStatusCode)
-        {
-            var content = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(content);
-        }
-        else
-        {
-            var content = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(content);
+        var path = "/1.0/auth/identities/oidc";
+        var response = await GetAsync<ResponseBase<Object>>(path);
+    }
 
+    public async Task<String[]?> InstancesGetAsync()
+    {
+        var path = "/1.0/instances";
+        var response = await GetAsync<ResponseBase<String[]>>(path);
+        return response?.Metadata ?? null;
+    }
+
+    public async Task<InstanceDto?> InstancesGetAsync(String name)
+    {
+        var path = $"/1.0/instances/{name}";
+        var response = await GetAsync<ResponseBase<InstanceDto>>(path);
+        return response?.Metadata ?? null;
+    }
+
+    private async Task<TOut?> GetAsync<TOut>(String path)
+    {
+        using (var response = await this.httpClient.GetAsync(path))
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(content);
+                    return JsonSerializer.Deserialize<TOut>(content);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Deserialization failed");
+                    return default!;
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.StatusCode);
+                return default!;
+            }
         }
     }
 
