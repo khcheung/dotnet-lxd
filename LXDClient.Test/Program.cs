@@ -44,14 +44,74 @@ public class Program
         //     Type = InstanceTypeEnum.VirtualMachine
         // });
 
-
         // var v2 = await client.InstancesGetAsync("v2");
         // if (v2 != null)
         // {
         //     Console.WriteLine(v2!.Project);
         // }
 
+        // var instanceV2 = await client.InstancesGetAsync("v2");
+
+        // if (instanceV2 != null)
+        // {
+        //     instanceV2.Devices??= new Dictionary<string, Dictionary<string, string>>();
+        //     instanceV2.Devices.Add("eth0", new Dictionary<string, string>() {
+        //         {"type", "nic"},
+        //         {"nictype", "bridged"},
+        //         {"parent", "lxdbr0"}
+        //     });
+        //     await client.InstancesPutAsync("v2", new InstancePutRequestDto()
+        //     {
+        //         Architecture = instanceV2.Architecture,
+        //         Config = instanceV2.Config,
+        //         Description = instanceV2.Description,
+        //         Ephemeral = instanceV2.Ephemeral,
+        //         Profiles = instanceV2.Profiles,
+        //         Stateful = instanceV2.Stateful,
+        //         Devices = instanceV2.Devices
+        //     });
+        // }
+
         //await client.InstancesDeleteAsync("v2");
+
+        // var networks = await client.NetworksGetAsync();
+        // var networks2 = await client.NetworksGetRecursivelyAsync();
+
+        // networks2?
+        // .Where(n => n.Type != "unknown" && n.Type != "loopback")
+        // .ToList()
+        // .ForEach(n =>
+        // {
+        //     Console.WriteLine(n.Name);
+        //     //Console.WriteLine(n.Type);
+        // });
+
+        // await client.NetworkPostAsync(new NetworkPostRequestDto()
+        // {
+        //     Name = "lxdbr1",
+        //     Type = "bridge",
+        //     Config = new Dictionary<string, string>() {
+        //         {"ipv4.address", "10.0.22.1/24"},
+        //         {"ipv4.nat", "true"},
+        //         {"ipv6.address", "none"},
+        //         {"ipv6.nat", "true"}
+        //     }
+        // });
+
+        // var br1 = await client.NetworksGetAsync("lxdbr1");
+        // if (br1 != null)
+        // {
+        //     br1.Config!["ipv4.address"] = "10.0.22.2/24";
+
+        //     await client.NetworkPutAsync("lxdbr1", new NetworkPutRequestDto()
+        //     {
+        //         Description = br1.Description,
+        //         Config = br1.Config
+        //     });
+        // }
+
+        //await client.NetworkDeleteAsync("lxdbr1");
+
     }
 }
 

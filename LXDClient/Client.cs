@@ -87,6 +87,13 @@ public class Client
         var response = await PostAsync<InstancePostRequestDto, AsyncResponseBase<AsyncOperationDto>>(path, request);
     }
 
+    public async Task<AsyncResponseBase<AsyncOperationDto>?> InstancesPutAsync(String name, InstancePutRequestDto request)
+    {
+        var path = $"/1.0/instances/{name}";
+        var response = await PutAsync<InstancePutRequestDto, AsyncResponseBase<AsyncOperationDto>>(path, request);
+        return response;
+    }
+
     public async Task<AsyncResponseBase<AsyncOperationDto>?> InstancesDeleteAsync(String name, String? project = null)
     {
         var path = $"/1.0/instances/{name}";
@@ -98,6 +105,53 @@ public class Client
         return response;
     }
 
+
+    #endregion
+
+    #region Networks
+    public async Task<String[]?> NetworksGetAsync()
+    {
+        var path = "/1.0/networks";
+        var response = await GetAsync<ResponseBase<String[]>>(path);
+        return response?.Metadata ?? null;
+    }
+
+    public async Task<NetworkDto?> NetworksGetAsync(String name)
+    {
+        var path = $"/1.0/networks/{name}";
+        var response = await GetAsync<ResponseBase<NetworkDto>>(path);
+        return response?.Metadata ?? null;
+    }
+
+    public async Task<NetworkDto[]?> NetworksGetRecursivelyAsync()
+    {
+        var path = "/1.0/networks?recursion=1";
+        var response = await GetAsync<ResponseBase<NetworkDto[]>>(path);
+        if (response != null)
+        {
+            return response.Metadata;
+        }
+        return null;
+    }
+
+    public async Task NetworkPostAsync(NetworkPostRequestDto request)
+    {
+        var path="/1.0/networks";
+        var response = await PostAsync<NetworkPostRequestDto, ResponseBase<Object>>(path, request);
+
+    }
+
+    public async Task NetworkPutAsync(String name, NetworkPutRequestDto request)
+    {
+        var path = $"/1.0/networks/{name}";
+        var response = await PutAsync<NetworkPutRequestDto, ResponseBase<Object>>(path, request);
+    }
+
+    public async Task NetworkDeleteAsync(String name)
+    {
+        var path = $"/1.0/networks/{name}";
+        var response = await DeleteAsync<ResponseBase<Object>>(path);
+    }
 
     #endregion
 
@@ -143,7 +197,36 @@ public class Client
                 catch (Exception ex)
                 {
                     Console.WriteLine("Deserialization failed");
-                    Console.WriteLine(ex.Message);                    
+                    Console.WriteLine(ex.Message);
+                    return default!;
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.StatusCode);
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(content);
+                return default!;
+            }
+        }
+    }
+
+    private async Task<TOut?> PutAsync<TIn, TOut>(String path, TIn request)
+    {
+        using (var response = await this.httpClient.PutAsJsonAsync<TIn>(path, request))
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(content);
+                    return JsonSerializer.Deserialize<TOut>(content);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Deserialization failed");
+                    Console.WriteLine(ex.Message);
                     return default!;
                 }
             }
