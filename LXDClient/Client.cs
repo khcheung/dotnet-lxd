@@ -1,6 +1,4 @@
-﻿
-
-using System.Diagnostics.SymbolStore;
+﻿using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
@@ -22,7 +20,7 @@ public class Client
         this.CreateHttpClient();
     }
 
-
+    #region HttpClient with Certificate and Accept All Server Certificate
     private void CreateHttpClient()
     {
         HttpClientHandler handler = new();
@@ -41,33 +39,34 @@ public class Client
         client.BaseAddress = new Uri(serverUrl);
         this.httpClient = client;
     }
+    #endregion
 
+    #region Certificates
     public async Task<Boolean> CertificatePublicPostAsync(String token)
     {
-        var jsonObj = new
+        var path = "/1.0/certificates?public";
+        var request = new CertificatePublicRequestDto
         {
-            trust_token = token
+            TrustToken = token
         };
-        var json = JsonSerializer.Serialize(jsonObj);
-        var response = await this.httpClient.PostAsync("/1.0/certificates?public",
-        new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
-
-        var content = await response.Content.ReadAsStringAsync();
-        //Console.WriteLine(content);
-
-        if (response.StatusCode == System.Net.HttpStatusCode.Created)
+        var response = await PostAsync<CertificatePublicRequestDto, ResponseBase<Object>>(path, request);
+        if (response?.StatusCode == 200)
         {
             return true;
         }
         return false;
     }
+    #endregion
 
+    #region Identities
     public async Task AuthIdentitiesOidcGetAsync()
     {
         var path = "/1.0/auth/identities/oidc";
         var response = await GetAsync<ResponseBase<Object>>(path);
     }
+    #endregion
 
+    #region Instances
     public async Task<String[]?> InstancesGetAsync()
     {
         var path = "/1.0/instances";
@@ -82,6 +81,27 @@ public class Client
         return response?.Metadata ?? null;
     }
 
+    public async Task InstancesPostAsync(String project, InstancePostRequestDto request)
+    {
+        var path = $"/1.0/instances?project={project}";
+        var response = await PostAsync<InstancePostRequestDto, AsyncResponseBase<AsyncOperationDto>>(path, request);
+    }
+
+    public async Task<AsyncResponseBase<AsyncOperationDto>?> InstancesDeleteAsync(String name, String? project = null)
+    {
+        var path = $"/1.0/instances/{name}";
+        if (project != null)
+        {
+            path += $"?project={project}";
+        }
+        var response = await DeleteAsync<AsyncResponseBase<AsyncOperationDto>>(path);
+        return response;
+    }
+
+
+    #endregion
+
+    #region HTTP Methods
     private async Task<TOut?> GetAsync<TOut>(String path)
     {
         using (var response = await this.httpClient.GetAsync(path))
@@ -108,28 +128,62 @@ public class Client
         }
     }
 
-
-
-    public async Task TestAsync()
+    private async Task<TOut?> PostAsync<TIn, TOut>(String path, TIn request)
     {
-
-        var client = this.httpClient;
-
-        //var response = await client.GetAsync("/");
-        //var response = await client.GetAsync("/1.0");
-        var response = await client.GetAsync("/1.0/auth/identities/oidc");
-
-        Console.WriteLine(response.StatusCode);
-        if (response.IsSuccessStatusCode)
+        using (var response = await this.httpClient.PostAsJsonAsync<TIn>(path, request))
         {
-            var content = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(content);
-        }
-        else
-        {
-            var content = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(content);
-
+            if (response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(content);
+                    return JsonSerializer.Deserialize<TOut>(content);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Deserialization failed");
+                    Console.WriteLine(ex.Message);                    
+                    return default!;
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.StatusCode);
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(content);
+                return default!;
+            }
         }
     }
+
+    private async Task<TOut?> DeleteAsync<TOut>(String path)
+    {
+        using (var response = await this.httpClient.DeleteAsync(path))
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(content);
+                    return JsonSerializer.Deserialize<TOut>(content);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Deserialization failed");
+                    return default!;
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.StatusCode);
+                return default!;
+            }
+        }
+    }
+
+
+
+    #endregion
 }
