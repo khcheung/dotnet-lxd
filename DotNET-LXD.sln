@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LXDClient", "LXDClient\LXDC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LXDClient.Test", "LXDClient.Test\LXDClient.Test.csproj", "{833E9FF9-D368-4AD3-8514-EFB166F2D011}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LXDClient.PowerShell", "LXDClient.PowerShell\LXDClient.PowerShell.csproj", "{4E5CB5FA-8B46-404C-A149-53DF7D20DC32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{833E9FF9-D368-4AD3-8514-EFB166F2D011}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{833E9FF9-D368-4AD3-8514-EFB166F2D011}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{833E9FF9-D368-4AD3-8514-EFB166F2D011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5CB5FA-8B46-404C-A149-53DF7D20DC32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5CB5FA-8B46-404C-A149-53DF7D20DC32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5CB5FA-8B46-404C-A149-53DF7D20DC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5CB5FA-8B46-404C-A149-53DF7D20DC32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
