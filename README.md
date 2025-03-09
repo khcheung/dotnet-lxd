@@ -31,9 +31,9 @@ Basic client to invoke LXD api for basic functions.
 
 ## LXD Client (PowerShell)
 
-Unix/Linux Config
-- ~/.config/dotnetlxd/config.json
+Unix/Linux Config (~/.config/dotnetlxd/config.json)
 
+### PowerShell Cmdlet List
 - Instances
   - Get-LXDInstances
 - Networks
