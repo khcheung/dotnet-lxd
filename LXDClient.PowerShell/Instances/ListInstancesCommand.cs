@@ -17,11 +17,18 @@ public class ListInstancesCommand : Cmdlet
         this._client = new LXDClient.Client(config.ServerUrl, certHelper.Certificate);
     }
     protected override void ProcessRecord()
-    {        
-        var instances = this._client.InstancesGetAsync().Result;
+    {
+        var instances = this._client.InstancesGetRecursivelyAsync().Result;
         foreach (var instance in instances!)
         {
-            WriteObject(new { InstancePath = instance });
+            WriteObject(new
+            {
+                Name = instance.Name,
+                Type = instance.Type,
+                Description = instance.Description,
+                Status = instance.Status,
+                Architecture = instance.Architecture
+            });
         }
     }
 }

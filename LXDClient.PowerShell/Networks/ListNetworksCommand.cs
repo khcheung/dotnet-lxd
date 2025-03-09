@@ -16,11 +16,17 @@ public class ListNetworksCommand : Cmdlet
         this._client = new LXDClient.Client(config.ServerUrl, certHelper.Certificate);
     }
     protected override void ProcessRecord()
-    {        
-        var networks = this._client.NetworksGetAsync().Result;
+    {
+        var networks = this._client.NetworksGetRecursivelyAsync().Result;
         foreach (var network in networks!)
         {
-            WriteObject(new { NetworkPath = network });
+            WriteObject(new
+            {
+                Name = network.Name,                
+                Type = network.Type,
+                Description = network.Description,
+                Managed = network.Managed,                
+            });
         }
     }
 

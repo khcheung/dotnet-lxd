@@ -74,6 +74,13 @@ public class Client
         return response?.Metadata ?? null;
     }
 
+    public async Task<InstanceDto[]?> InstancesGetRecursivelyAsync()
+    {
+        var path = "/1.0/instances?recursion=1";
+        var response = await GetAsync<ResponseBase<InstanceDto[]>>(path);
+        return response?.Metadata ?? null;
+    }
+
     public async Task<InstanceDto?> InstancesGetAsync(String name)
     {
         var path = $"/1.0/instances/{name}";

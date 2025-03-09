@@ -17,6 +17,7 @@ Basic client to invoke LXD api for basic functions.
   - Get OIDC (AuthIdentitiesOidcGetAsync) - GET (/1.0/auth/identities/oidc)
 - Instances
   - List Instances (InstancesGetAsync) - GET (/1.0/instances)
+  - List Instances (InstancesGetRecursivelyAsync) - GET (/1.0/instances?recursion=1)
   - Get Instance (InstancesGetAsync) - GET (/1.0/instances/{name})
   - Create Instance (InstancesPostAsync) - POST (/1.0/instances)
   - Update Instance (InstancesPutAsync) - PUT (/1.0/instances/{name})
@@ -27,3 +28,13 @@ Basic client to invoke LXD api for basic functions.
   - Create Networks (NetworkPostAsync) - POST (/1.0/networks)
   - Update Network (NetworkPutAsync) - PUT (/1.0/networks/{name})
   - Delete Networks (NetworkDeleteAsync) - DELETE (/1.0/networks)
+
+## LXD Client (PowerShell)
+
+Unix/Linux Config
+- ~/.config/dotnetlxd/config.json
+
+- Instances
+  - Get-LXDInstances
+- Networks
+  - Get-LXDNetworks

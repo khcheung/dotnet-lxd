@@ -23,6 +23,8 @@ public class Program
         // Get Auth Identies OIDC (Test Client Cert Auth)
         //await client.AuthIdentitiesOidcGetAsync();
 
+        //var instances = await client.InstancesGetRecursivelyAsync();
+
         // var instances = await client.InstancesGetAsync();
         // foreach (var instance in instances!)
         // {
