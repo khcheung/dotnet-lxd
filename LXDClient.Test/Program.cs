@@ -114,6 +114,10 @@ public class Program
 
         //await client.NetworkDeleteAsync("lxdbr1");
 
+        // var storages1 = await client.StoragesGetAsync();
+        // var storage = await client.StoragesGetAsync("default");
+        // var storages = await client.StoragesGetRecursivelyAsync();
+
     }
 }
 

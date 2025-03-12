@@ -162,6 +162,29 @@ public class Client
 
     #endregion
 
+    #region Storages
+    public async Task<String[]?> StoragesGetAsync()
+    {
+        var path = "/1.0/storage-pools";
+        var response = await GetAsync<ResponseBase<String[]>>(path);
+        return response?.Metadata ?? null;
+    }
+
+    public async Task<StorageDto?> StoragesGetAsync(String name)
+    {
+        var path = $"/1.0/storage-pools/{name}";
+        var response = await GetAsync<ResponseBase<StorageDto>>(path);
+        return response?.Metadata ?? null;
+    }
+
+    public async Task<StorageDto[]?> StoragesGetRecursivelyAsync()
+    {
+        var path = "/1.0/storage-pools?recursion=1";
+        var response = await GetAsync<ResponseBase<StorageDto[]>>(path);
+        return response?.Metadata ?? null;
+    }
+    #endregion
+
     #region HTTP Methods
     private async Task<TOut?> GetAsync<TOut>(String path)
     {

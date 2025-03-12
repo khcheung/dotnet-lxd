@@ -28,6 +28,10 @@ Basic client to invoke LXD api for basic functions.
   - Create Networks (NetworkPostAsync) - POST (/1.0/networks)
   - Update Network (NetworkPutAsync) - PUT (/1.0/networks/{name})
   - Delete Networks (NetworkDeleteAsync) - DELETE (/1.0/networks)
+- Storages
+  - List Storages (StoragesGetAsync) - GET (/1.0/storage-pools)
+  - List Storages (StoragesGetRecursivelyAsync) - GET (/1.0/storage-pools?recursion=1)
+  - Get Storage (StoragesGetAsync) - GET (/1.0/storage-pools/{name})
 
 ## LXD Client (PowerShell)
 
@@ -38,3 +42,6 @@ Unix/Linux Config (~/.config/dotnetlxd/config.json)
   - Get-LXDInstances
 - Networks
   - Get-LXDNetworks
+- Storages
+  - Get-LXDStorages
+
