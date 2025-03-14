@@ -9,18 +9,19 @@ public class InstancePostRequestDto
     public string? InstanceType { get; set; }
     public bool Start { get; set; }
     [JsonIgnore]
-    public InstanceTypeEnum Type { get; set; }  = InstanceTypeEnum.Container;
-    [JsonPropertyName("type") ]
+    public InstanceTypeEnum Type { get; set; } = InstanceTypeEnum.Container;
+    [JsonPropertyName("type")]
     public String TypeString
     {
-        get => Type switch {
+        get => Type switch
+        {
             InstanceTypeEnum.VirtualMachine => "virtual-machine",
             InstanceTypeEnum.Container => "container",
             _ => "container"
         };
     }
 
-    public InstanceSourceDto Source { get; set; }
+    public InstanceSourceDto Source { get; set; } = null!;
 
 
 }
@@ -46,7 +47,8 @@ public enum InstanceSourceTypeEnum
     Container
 }
 
-public enum InstanceTypeEnum {
+public enum InstanceTypeEnum
+{
     VirtualMachine,
     Container
 }
