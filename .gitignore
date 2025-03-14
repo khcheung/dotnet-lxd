@@ -16,3 +16,6 @@ msbuild.wrn
 
 # Dev Container
 .devcontainer/
+
+# VSCode
+.vscode/
