@@ -32,6 +32,8 @@ Basic client to invoke LXD api for basic functions.
   - List Storages (StoragesGetAsync) - GET (/1.0/storage-pools)
   - List Storages (StoragesGetRecursivelyAsync) - GET (/1.0/storage-pools?recursion=1)
   - Get Storage (StoragesGetAsync) - GET (/1.0/storage-pools/{name})
+  - List StorageVolumes (StorageVolumeGetAsync) - GET (/1.0/storage-volumes)
+  - List StorageVolumes (StorageVolumeGetRecursivelyAsync) - GET (/1.0/storage-volumes?recursion=1)
 
 ## LXD Client (PowerShell)
 

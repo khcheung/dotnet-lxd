@@ -118,6 +118,9 @@ public class Program
         // var storage = await client.StoragesGetAsync("default");
         // var storages = await client.StoragesGetRecursivelyAsync();
 
+        // var volumes = await client.StorageVolumeGetAsync();
+        // var volumes = await client.StorageVolumeGetRecursivelyAsync();
+
     }
 }
 

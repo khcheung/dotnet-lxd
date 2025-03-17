@@ -183,6 +183,20 @@ public class Client
         var response = await GetAsync<ResponseBase<StorageDto[]>>(path);
         return response?.Metadata ?? null;
     }
+
+    public async Task<String[]?> StorageVolumeGetAsync()
+    {
+        var path = "/1.0/storage-volumes";
+        var response = await GetAsync<ResponseBase<String[]>>(path);
+        return response?.Metadata ?? null; 
+    }
+
+    public async Task<StorageVolumeDto[]?> StorageVolumeGetRecursivelyAsync()
+    {
+        var path = "/1.0/storage-volumes?recursion=1";
+        var response = await GetAsync<ResponseBase<StorageVolumeDto[]>>(path);
+        return response?.Metadata ?? null;
+    }
     #endregion
 
     #region HTTP Methods
