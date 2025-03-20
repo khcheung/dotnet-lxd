@@ -121,6 +121,9 @@ public class Program
         // var volumes = await client.StorageVolumeGetAsync();
         // var volumes = await client.StorageVolumeGetRecursivelyAsync();
 
+        //var apis = await client.ServerGetEndpointsAsync();
+        //var server = await client.ServerGetAsync();
+
     }
 }
 

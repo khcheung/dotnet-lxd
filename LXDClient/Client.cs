@@ -41,6 +41,23 @@ public class Client
     }
     #endregion
 
+#region Server
+
+public async Task<String[]> ServerGetEndpointsAsync()
+{
+    var path = "/";
+    var response = await GetAsync<ResponseBase<String[]>>(path);
+    return response?.Metadata ?? new String[0];
+}
+public async Task<ServerDto?> ServerGetAsync()
+{
+    var path = "/1.0";
+    var response = await GetAsync<ResponseBase<ServerDto>>(path);
+    return response?.Metadata ?? null;
+}
+#endregion
+
+
     #region Certificates
     public async Task<Boolean> CertificatePublicPostAsync(String token)
     {
